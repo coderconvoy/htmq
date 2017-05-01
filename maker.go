@@ -72,10 +72,16 @@ func NewPage(ss ...string) (*Tag, *Tag) {
 		NewTag("meta", "charset", "utf-8"),
 	)
 	for _, s := range strings.Split(css, ",") {
-		head.AddChildren(NewTag("link", "rel", "stylesheet", "type", "text/css", "href", s))
+		if s != "" {
+			head.AddChildren(NewTag("link", "rel", "stylesheet", "type", "text/css", "href", s))
+		}
 	}
 
-	for _, _ = range js {
+	for _, s := range strings.Split(js, ",") {
+		if s != "" {
+			head.AddChildren(NewTag("script", "src", s))
+		}
+
 	}
 
 	return NewParent("page", []*Tag{dt, mh}), body

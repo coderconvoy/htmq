@@ -28,6 +28,14 @@ func QSubmit(text string) *Tag {
 	return NewTag("input", "type", "submit", "text", text, "value", text)
 }
 
+func QLink(href, inner string) *Tag {
+	return NewTextTag("a", inner, "href", href)
+}
+
+func QImg(src string, options ...string) *Tag {
+	return NewTag("img", append(options, "src", src)...)
+}
+
 func QForm(action string, chids []*Tag, options ...string) *Tag {
 	return NewParent("form", chids, append(options, "method", "post", "action", action)...)
 }
