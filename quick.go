@@ -48,6 +48,14 @@ func QMulti(ptype, ttype string, chids ...string) *Tag {
 	return NewParent(ptype, ops)
 }
 
+func QScript(ss ...string) *Tag {
+	inner := "\n"
+	for _, v := range ss {
+		inner += v + "\n// --- --- --- --- ---\n"
+	}
+	return NewTextTag("script", inner)
+}
+
 func (t *Tag) Wrap(ttype string, ss ...string) *Tag {
 	return NewParent(ttype, []*Tag{t}, ss...)
 }
