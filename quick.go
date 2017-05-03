@@ -56,6 +56,11 @@ func QScript(ss ...string) *Tag {
 	return NewTextTag("script", inner)
 }
 
+func QBut(inner string, onclick string, ss ...string) *Tag {
+	//TODO,Look for images in ss
+	return NewTextTag("button", inner, "onclick", onclick, ss...)
+}
+
 func (t *Tag) Wrap(ttype string, ss ...string) *Tag {
 	return NewParent(ttype, []*Tag{t}, ss...)
 }
