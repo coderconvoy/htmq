@@ -109,25 +109,34 @@ func (t *Tag) SetAttr(k, v string) {
 
 //AddAttrs is a function for the super lazy.
 //Use "--" to indicate check true
+//"!" to add an image lazily
+//"^" to add text as a child
 func (t *Tag) AddAttrs(s ...string) {
-	ls := len(s)
 
 	mode := 0
 	atname := ""
-	for i := 0; i < ls; i++ {
+	for _, v := range s {
 		if mode == 0 {
 			//New Variable name
-			if strings.HasPrefix(s[i], "--") {
-				s := strings.TrimPrefix(s[i], "--")
-				t.SetAttr(s, EMPTY)
+			if strings.HasPrefix(v, "--") {
+				vv := strings.TrimPrefix(v, "--")
+				t.SetAttr(vv, EMPTY)
 				continue
 			}
-			atname = s[i]
+			if strings.HasPrefix(v, "!") {
+				t.AddChildren(QImg(strings.TrimPrefix(v, "!")))
+				continue
+			}
+			if strings.HasPrefix(v, "^") {
+				t.AddChildren(NewText(strings.TrimPrefix(v, "^")))
+				continue
+			}
+			atname = strings.TrimPrefix(v, "\\")
 			mode = 1
 			continue
 		}
 		//mode == 1 no add attr
-		t.SetAttr(atname, s[i])
+		t.SetAttr(atname, v)
 		mode = 0
 
 	}

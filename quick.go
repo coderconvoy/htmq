@@ -56,27 +56,9 @@ func QScript(ss ...string) *Tag {
 	return NewTextTag("script", inner)
 }
 
-func GetInners(ss ...string) (passing []string, chids []*Tag) {
-	for _, v := range ss {
-		if strings.HasPrefix(v, "!") {
-			chids = append(chids, QImg(strings.RemovePrefix("!")))
-			continue
-		}
-		if strings.HasPrefix(v, "^") {
-			chids = append(chids, NewText(strings.RemovePrefix("^")))
-			continue
-		}
-		passing = append(passing, v)
-	}
-	return
-}
-
 func QBut(inner string, onclick string, ss ...string) *Tag {
-	//TODO,Look for images in ss
 
-	passing, chids := GetInners(ss)
-	res := NewTextTag("button", inner, "onclick", onclick, passing...)
-	res.AddChildren(chids)
+	res := NewTextTag("button", inner, append(ss, "onclick", onclick)...)
 	return res
 
 }
