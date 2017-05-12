@@ -35,6 +35,7 @@ func NewTextTag(kind string, inner string, s ...string) *Tag {
 	return res
 }
 
+//Deprecated
 func NewText(s string) *Tag {
 	return &Tag{
 		TType: "text",

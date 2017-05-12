@@ -19,6 +19,12 @@ func QSelect(name string, options ...string) *Tag {
 
 	return res
 }
+func QText(s string) *Tag {
+	return &Tag{
+		TType: "text",
+		Inner: s,
+	}
+}
 
 func QInput(ttype, name string, options ...string) *Tag {
 	return NewTag("input", append(options, "type", ttype, "name", name)...)
@@ -46,6 +52,10 @@ func QMulti(ptype, ttype string, chids ...string) *Tag {
 		ops = append(ops, NewTextTag(ttype, v))
 	}
 	return NewParent(ptype, ops)
+}
+
+func QOption(realval, showval string) *Tag {
+	return NewTextTag("option", showval, "value", realval)
 }
 
 func QScript(ss ...string) *Tag {
