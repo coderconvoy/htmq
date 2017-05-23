@@ -66,7 +66,7 @@ func NewPage(ss ...string) (*Tag, *Tag) {
 	dt := NewTag("!DOCTYPE", "--html")
 	mh := NewTag("html")
 	head := NewTag("head")
-	body := NewTag("body")
+	body := NewTag("body", "id", "main-area")
 	mh.AddChildren(head, body)
 	head.AddChildren(
 		NewTextTag("title", title),
@@ -144,8 +144,8 @@ func (t *Tag) AddAttrs(s ...string) {
 
 }
 
-func (self *Tag) AddChildren(ts ...*Tag) {
-	self.Children = append(self.Children, ts...)
+func (t *Tag) AddChildren(ts ...*Tag) {
+	t.Children = append(t.Children, ts...)
 }
 
 func Childless(ttype string) bool {
@@ -158,16 +158,20 @@ func Childless(ttype string) bool {
 	}
 	return false
 }
-func (self *Tag) String() string {
-	return self.toString("")
+
+func (t *Tag) Bytes() []byte {
+	return []byte(t.String())
+}
+func (t *Tag) String() string {
+	return t.toString("")
 }
 
-func (self *Tag) toString(pre string) string {
+func (t *Tag) toString(pre string) string {
 	res := ""
 	pre2 := pre
-	if self.TType != "page" && self.TType != "text" {
-		res = pre + "<" + self.TType
-		for _, v := range self.Attrs {
+	if t.TType != "page" && t.TType != "text" {
+		res = pre + "<" + t.TType
+		for _, v := range t.Attrs {
 			if v.Val == EMPTY {
 				res += " " + v.Name
 				continue
@@ -177,22 +181,22 @@ func (self *Tag) toString(pre string) string {
 		res += ">"
 		pre2 = pre + " "
 	}
-	if Childless(self.TType) {
+	if Childless(t.TType) {
 		return res + "\n"
 	}
 
-	res += self.Inner
+	res += t.Inner
 
-	if len(self.Children) > 0 {
+	if len(t.Children) > 0 {
 		res += "\n"
 
-		for i := 0; i < len(self.Children); i++ {
-			res += self.Children[i].toString(pre2)
+		for i := 0; i < len(t.Children); i++ {
+			res += t.Children[i].toString(pre2)
 		}
 		res += pre
 	}
-	if self.TType != "page" && self.TType != "text" {
-		res += "</" + self.TType + ">\n"
+	if t.TType != "page" && t.TType != "text" {
+		res += "</" + t.TType + ">\n"
 	}
 
 	return res

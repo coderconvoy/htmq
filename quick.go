@@ -30,8 +30,8 @@ func QInput(ttype, name string, options ...string) *Tag {
 	return NewTag("input", append(options, "type", ttype, "name", name)...)
 }
 
-func QSubmit(text string) *Tag {
-	return NewTag("input", "type", "submit", "text", text, "value", text)
+func QSubmit(text string, options ...string) *Tag {
+	return NewTag("input", append(options, "type", "submit", "text", text, "value", text)...)
 }
 
 func QLink(href, inner string) *Tag {
