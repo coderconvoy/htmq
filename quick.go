@@ -38,6 +38,10 @@ func QLink(href, inner string) *Tag {
 	return NewTextTag("a", inner, "href", href)
 }
 
+func QLinkRep(href, inner string, options ...string) *Tag {
+	return NewTextTag("a", inner, append(options, "href", "javascript:void(0)", "onclick", "location.replace('"+href+"');return false;")...)
+}
+
 func QImg(src string, options ...string) *Tag {
 	return NewTag("img", append(options, "src", src)...)
 }
