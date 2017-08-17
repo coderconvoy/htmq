@@ -167,6 +167,9 @@ func (t *Tag) String() string {
 }
 
 func (t *Tag) toString(pre string) string {
+	if t == nil {
+		return ""
+	}
 	res := ""
 	pre2 := pre
 	if t.TType != "page" && t.TType != "text" {
