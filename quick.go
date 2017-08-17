@@ -80,3 +80,11 @@ func QBut(inner string, onclick string, ss ...string) *Tag {
 func (t *Tag) Wrap(ttype string, ss ...string) *Tag {
 	return NewParent(ttype, []*Tag{t}, ss...)
 }
+
+func (t *Tag) QUpload(action string, ss ...string) *Tag {
+	return QForm(action, []*Tag{
+		QInput("file", "uploadfile"),
+		QInput("hidden", "token", "value", "{{.}}"),
+		QSubmit("Upload File"),
+	}, append(ss, "enctype", "multi-part/form-data")...)
+}
