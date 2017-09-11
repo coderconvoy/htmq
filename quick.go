@@ -34,8 +34,8 @@ func QSubmit(text string, options ...string) *Tag {
 	return NewTag("input", append(options, "type", "submit", "text", text, "value", text)...)
 }
 
-func QLink(href, inner string) *Tag {
-	return NewTextTag("a", inner, "href", href)
+func QLink(href, inner string, options ...string) *Tag {
+	return NewTextTag("a", inner, append(options, "href", href)...)
 }
 
 func QLinkRep(href, inner string, options ...string) *Tag {
